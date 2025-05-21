@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Using cargo-chef to manage Rust build cache effectively
-FROM lukemathwalker/cargo-chef:latest-rust-1.81 as chef
+FROM docker.io/lukemathwalker/cargo-chef:latest-rust-1.81 as chef
 
 WORKDIR /app
 RUN apt update && apt install lld clang -y
@@ -31,7 +31,7 @@ ENV SQLX_OFFLINE true
 RUN echo "Building with profile: ${PROFILE}, features: ${FEATURES}, "
 RUN cargo build --profile=${PROFILE} --features "${FEATURES}" --bin appflowy_cloud
 
-FROM debian:bookworm-slim AS runtime
+FROM docker.io/debian:bookworm-slim AS runtime
 WORKDIR /app
 RUN apt-get update -y \
   && apt-get install -y --no-install-recommends openssl ca-certificates curl \
